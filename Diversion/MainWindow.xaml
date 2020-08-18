@@ -5,8 +5,91 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Diversion"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="ICollectionView" Height="450" Width="900">
+    <Window.DataContext>
+        <local:WindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <Style x:Key="Title" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="0 5"/>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ListView ItemsSource="{Binding animalsView}" Grid.Row="0" IsSynchronizedWithCurrentItem="True">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="NAME" DisplayMemberBinding="{Binding name}"/>
+                    <GridViewColumn Header="COUNT" DisplayMemberBinding="{Binding count}"/>
+                    <GridViewColumn Header="HABITAT" DisplayMemberBinding="{Binding habitat}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Row="1">
+            <Grid.Resources>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Margin" Value="0 0 10 0"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Style="{StaticResource Title}"><Bold>Filter</Bold></TextBlock>
+                <TextBox Margin="0 5" Text="{Binding filter, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding FilterCommand}" Key="Return" />
+                    </TextBox.InputBindings>
+                </TextBox>
+                <Button Content="Filter" Command="{Binding FilterCommand}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <TextBlock Style="{StaticResource Title}"><Bold>Sorting</Bold></TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <RadioButton Command="{Binding SortCommand}" CommandParameter="name" Content="NAME" Grid.Column="0"/>
+                    <RadioButton Command="{Binding SortCommand}" CommandParameter="count"  Content="COUNT" Grid.Column="1"/>
+                    <RadioButton Command="{Binding SortCommand}" CommandParameter="none"  Content="NONE" Grid.Column="2"/>
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Style="{StaticResource Title}"><Bold>Grouping</Bold></TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <RadioButton Command="{Binding GroupCommand}" CommandParameter="count" Content="COUNT" Grid.Column="0"/>
+                    <RadioButton Command="{Binding GroupCommand}" CommandParameter="habitat"  Content="HABITAT" Grid.Column="1"/>
+                    <RadioButton Command="{Binding GroupCommand}" CommandParameter="none"  Content="NONE" Grid.Column="2"/>
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Column="3">
+                <TextBlock Style="{StaticResource Title}"><Bold>Selection</Bold></TextBlock>
+                <TextBlock><Bold>Selected item:</Bold></TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding CurrentItem.name}" Grid.Column="0"/>
+                    <TextBlock Text="{Binding CurrentItem.count}" Grid.Column="1"/>
+                    <TextBlock Text="{Binding CurrentItem.habitat}" Grid.Column="2"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

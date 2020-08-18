@@ -9,20 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Diversion
+namespace Diversion.MVVM.ModelView
 {
-    public class WindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
-        List<Animal> animals = new List<Animal>();
-        ICollectionView _animalsView;
-        public ICollectionView animalsView
-        {
-            get => _animalsView;
-            set
-            {
-                _animalsView = value;
-            }
-        }
+        public ICollectionView animalsView { get; set; }
 
         private Animal _CurrentItem;
         public Animal CurrentItem
@@ -37,13 +28,16 @@ namespace Diversion
 
         public string filter { get; set; }
 
-        public WindowViewModel()
+        public MainWindowViewModel()
         {
-            animals.Add(new Animal("Dog", 5, "Home"));
-            animals.Add(new Animal("Squirrel", 1, "Forest"));
-            animals.Add(new Animal("Whale", 5, "Water"));
-            animals.Add(new Animal("Cat", 2, "Home"));
-            animals.Add(new Animal("Dolphin", 6, "Water"));
+            List<Animal> animals = new List<Animal>
+            {
+                new Animal("Dog", 5, "Home"),
+                new Animal("Squirrel", 1, "Forest"),
+                new Animal("Whale", 5, "Water"),
+                new Animal("Cat", 2, "Home"),
+                new Animal("Dolphin", 6, "Water")
+            };
             animalsView = CollectionViewSource.GetDefaultView(animals);
 
             animalsView.CurrentChanged += delegate

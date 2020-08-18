@@ -13,7 +13,7 @@ namespace Diversion.MVVM.ModelView
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public ICollectionView animalsView { get; set; }
+        public ListCollectionView animalsView { get; set; }
 
         private Animal _CurrentItem;
         public Animal CurrentItem
@@ -38,8 +38,7 @@ namespace Diversion.MVVM.ModelView
                 new Animal("Cat", 2, "Home"),
                 new Animal("Dolphin", 6, "Water")
             };
-            animalsView = CollectionViewSource.GetDefaultView(animals);
-
+            animalsView = (ListCollectionView)CollectionViewSource.GetDefaultView(animals);
             animalsView.CurrentChanged += delegate
             {
                 CurrentItem = (Animal)animalsView.CurrentItem;
@@ -77,16 +76,15 @@ namespace Diversion.MVVM.ModelView
         }
         void Sort(string type)
         {
+
             if (type != "none")
             {
-                animalsView.SortDescriptions.Clear();
-                animalsView.SortDescriptions.Add(new SortDescription(type, ListSortDirection.Ascending));
+                animalsView.CustomSort = new CustomSort(type);
             }
             else
             {
-                animalsView.SortDescriptions.Clear();
+                animalsView.CustomSort = null;
             }
-
         }
 
         ICommand _GroupCommand;

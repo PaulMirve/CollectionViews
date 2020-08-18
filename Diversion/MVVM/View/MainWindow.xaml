@@ -22,7 +22,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <!-- Is needed that the property IsSynchronizedWithCurrentItem is set to true for the selection to change. The method that handles the selection is in the constructor added to the ourICollectionView.CurrentChanged property -->
-        <ListView ItemsSource="{Binding animalsView}" Grid.Row="0" IsSynchronizedWithCurrentItem="True">
+        <ListView ItemsSource="{Binding animalsView}" Grid.Row="0" IsSynchronizedWithCurrentItem="True" VirtualizingStackPanel.IsVirtualizing="True">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="NAME" DisplayMemberBinding="{Binding name}"/>
@@ -62,7 +62,7 @@
                     </Grid.ColumnDefinitions>
                     <RadioButton Command="{Binding SortCommand}" CommandParameter="name" Content="NAME" Grid.Column="0"/>
                     <RadioButton Command="{Binding SortCommand}" CommandParameter="count"  Content="COUNT" Grid.Column="1"/>
-                    <RadioButton Command="{Binding SortCommand}" CommandParameter="none"  Content="NONE" Grid.Column="2"/>
+                    <RadioButton IsChecked="True" Command="{Binding SortCommand}" CommandParameter="none"  Content="NONE" Grid.Column="2"/>
                 </Grid>
             </StackPanel>
             <StackPanel Grid.Column="2">
@@ -75,7 +75,7 @@
                     </Grid.ColumnDefinitions>
                     <RadioButton Command="{Binding GroupCommand}" CommandParameter="count" Content="COUNT" Grid.Column="0"/>
                     <RadioButton Command="{Binding GroupCommand}" CommandParameter="habitat"  Content="HABITAT" Grid.Column="1"/>
-                    <RadioButton Command="{Binding GroupCommand}" CommandParameter="none"  Content="NONE" Grid.Column="2"/>
+                    <RadioButton IsChecked="True" Command="{Binding GroupCommand}" CommandParameter="none"  Content="NONE" Grid.Column="2"/>
                 </Grid>
             </StackPanel>
             <StackPanel Grid.Column="3">
